@@ -10,7 +10,7 @@ module shell_cylinder(h=1, ro=1, ri=0, center=false) {
     r2o = is_undef(ro[1])?(is_undef(ro[0])?ro:ro[0]):ro[1];
     difference() {
         cylinder(h,r1=r1o,r2=r2o,center=center);
-        extended_cylinder(h,r1=r1i,r2=r2i,center=center);
+        extended_cylinder(h,r1=r1i,r2=r2i,shift=h/100,center=center);
     }
 }
 
@@ -21,32 +21,38 @@ module shell_sphere(ro=1, ri=0) {
     }
 }
 
-module shell_cube(o = 1, i = 0) {
+module shell_cube(o = 1, i = 0, center = false) {
     xo = is_undef(o[0])?o:o[0];
     yo = is_undef(o[1])?(is_undef(o[0])?o:o[0]):o[1];
     zo = is_undef(o[2])?(is_undef(o[0])?o:o[0]):o[2];
     xi = is_undef(i[0])?i:i[0];
     yi = is_undef(i[1])?(is_undef(i[0])?i:i[0]):i[1];
     zi = is_undef(i[2])?(is_undef(i[0])?i:i[0]):i[2];
+    xt = center?0:xo/2;
+    yt = center?0:yo/2;
+    zt = center?0:zo/2;
+    translate([xt,yt,zt]) // translate handles center param
     difference() {
-        cube([xo,yo,zo]);
-        translate([(xo-xi)/2,(yo-yi)/2,(zo-zi)/2]) cube([xi,yi,zi]);
+        cube([xo,yo,zo],center=true);
+        cube([xi,yi,zi],center=true);
     }
 }
 
-module shell_square(o = 1, i = 0) {
+module shell_square(o = 1, i = 0, center = false) {
     xo = is_undef(o[0])?o:o[0];
     yo = is_undef(o[1])?(is_undef(o[0])?o:o[0]):o[1];
     xi = is_undef(i[0])?i:i[0];
     yi = is_undef(i[1])?(is_undef(i[0])?i:i[0]):i[1];
+    xt = center?0:xo/2;
+    yt = center?0:yo/2;
+    translate([xt,yt]) // translate handles center param
     difference() {
-        square([xo,yo]);
-        translate([(xo-xi)/2,(yo-yi)/2])
-        square([xi,yi]);
+        square([xo,yo],center=true);
+        square([xi,yi],center=true);
     }
 }
 
-module shell_round_square(o = 1, i = 0, or = 0, ir = 0) {
+module shell_round_square(o = 1, i = 0, or = 0, ir = 0, center = false) {
     xo = is_undef(o[0])?o:o[0];
     yo = is_undef(o[1])?(is_undef(o[0])?o:o[0]):o[1];
     xi = is_undef(i[0])?i:i[0];
@@ -55,9 +61,11 @@ module shell_round_square(o = 1, i = 0, or = 0, ir = 0) {
     yor = is_undef(or[1])?(is_undef(or[0])?or:or[0]):or[1];
     xir = is_undef(ir[0])?ir:ir[0];
     yir = is_undef(ir[1])?(is_undef(ir[0])?ir:ir[0]):ir[1];
+    xt = center?0:xo/2;
+    yt = center?0:yo/2;
+    translate([xt,yt])
     difference() {
         round_square([xo,yo],[xor,yor]);
-        translate([(xo-xi)/2,(yo-yi)/2])
         round_square([xi,yi],[xir,yir]);
     }
 }
