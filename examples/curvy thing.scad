@@ -1,8 +1,13 @@
+use <../lib/extended_cylinder.scad>
+
 bot_rad = 15;
 top_rad = 5;
 height = 15;
 c2c_x = 30;
 c2c_y = 40;
+slope = height / (top_rad-bot_rad);
+angle = atan(slope);
+echo(slope,angle);
 
 difference() {
 union() {
@@ -43,5 +48,5 @@ translate([
     (bot_rad+top_rad),
     0
 ])
-cylinder(h=height, r1=top_rad, r2=bot_rad);
+extended_cylinder(h=height, r1=top_rad, r2=bot_rad);
 }
