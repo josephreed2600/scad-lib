@@ -14,8 +14,6 @@ module shell_cylinder(h=1, ro=1, ri=0, center=false) {
     }
 }
 
-shell_cylinder(10,[4,2],[3,1],true);
-
 module shell_sphere(ro=1, ri=0) {
     difference() {
         sphere(ro);
@@ -73,6 +71,7 @@ module shell_circle(o = 1, i = 0) {
 
 $fn = 10;
 
+translate([0,0,-6]) shell_cylinder(10,[4,2],[3,1],true);
 translate([0,0,0]) shell_cylinder();
 translate([0,0,2]) shell_cylinder(1);
 translate([0,0,4]) shell_cylinder(1,2);
