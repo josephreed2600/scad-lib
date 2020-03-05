@@ -77,8 +77,6 @@ module shell_circle(o = 1, i = 0) {
     }
 }
 
-$fn = 10;
-
 translate([0,0,-6]) shell_cylinder(10,[4,2],[3,1],true);
 translate([0,0,0]) shell_cylinder();
 translate([0,0,2]) shell_cylinder(1);
